@@ -108,6 +108,15 @@ async def start(ctx, role):
     discordbot.settings['start'] = str(role)
     discordbot.save()
 
+@discordbot.command(name='count')
+async def count(ctx, role_mention):
+    try:
+        role_mention = role_mention.strip()
+        role_id = role_mention[3:-1]
+        role = discord.utils.get(ctx.guild.roles, id=int(role_id))
+        await ctx.send('There are {} {} players in the discord'.format(len(role.members), role.name))
+    except:
+        await ctx.send('**ERROR** make sure to mention the role.')
 
 @discordbot.event
 async def on_member_join(member):
